@@ -112,10 +112,10 @@ namespace acid
 		return Renderer::Get()->GetRenderStage(stage ? *stage : m_stage.first)->GetHeight();
 	}
 
-	Vector2 PipelineGraphics::GetDimensions(const std::optional<uint32_t> &stage) const
+	Vector2f PipelineGraphics::GetDimensions(const std::optional<uint32_t> &stage) const
 	{
 		auto renderStage = Renderer::Get()->GetRenderStage(stage ? *stage : m_stage.first);
-		return Vector2(static_cast<float>(renderStage->GetWidth()), static_cast<float>(renderStage->GetHeight()));
+		return Vector2f(static_cast<float>(renderStage->GetWidth()), static_cast<float>(renderStage->GetHeight()));
 	}
 
 	float PipelineGraphics::GetAspectRatio(const std::optional<uint32_t> &stage) const

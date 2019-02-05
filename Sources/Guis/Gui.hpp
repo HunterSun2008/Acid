@@ -42,7 +42,7 @@ namespace acid
 
 		void SetSelectedRow(const uint32_t &selectedRow) { m_selectedRow = selectedRow; }
 
-		const Vector2 &GetAtlasOffset() const { return m_atlasOffset; }
+		const Vector2f &GetAtlasOffset() const { return m_atlasOffset; }
 
 		const Vector4 &GetNinePatces() const { return m_ninePatches; }
 
@@ -78,7 +78,7 @@ namespace acid
 		std::shared_ptr<Texture> m_texture;
 		uint32_t m_numberOfRows;
 		uint32_t m_selectedRow;
-		Vector2 m_atlasOffset;
+		Vector2f m_atlasOffset;
 		Vector4 m_ninePatches; // TODO: Use UiBound
 
 		std::unique_ptr<IDriver<Colour>> m_colourDriver;

@@ -8,7 +8,7 @@ namespace acid
 		m_meshData(libraryGeometries->FindChild("geometry")->FindChild("mesh")),
 		m_vertexWeights(vertexWeights),
 		m_positionsList(std::vector<std::unique_ptr<VertexAnimatedData>>()),
-		m_uvsList(std::vector<Vector2>()),
+		m_uvsList(std::vector<Vector2f>()),
 		m_normalsList(std::vector<Vector3>()),
 		m_vertices(std::vector<VertexAnimated>()),
 		m_indices(std::vector<uint32_t>())
@@ -22,7 +22,7 @@ namespace acid
 		for (const auto &current : m_positionsList)
 		{
 			Vector3 position = current->GetPosition();
-			Vector2 textures = m_uvsList.at(current->GetUvIndex());
+			Vector2f textures = m_uvsList.at(current->GetUvIndex());
 			Vector3 normal = m_normalsList.at(current->GetNormalIndex());
 			Vector3 tangent = Vector3::Zero;
 
@@ -60,7 +60,7 @@ namespace acid
 
 		for (uint32_t i = 0; i < uvsCount / 2; i++)
 		{
-			Vector2 uv = Vector2(String::From<float>(uvsRawData[i * 2]), 1.0f - String::From<float>(uvsRawData[i * 2 + 1]));
+			Vector2f uv = Vector2f(String::From<float>(uvsRawData[i * 2]), 1.0f - String::From<float>(uvsRawData[i * 2 + 1]));
 			m_uvsList.emplace_back(uv);
 		}
 	}

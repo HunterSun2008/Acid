@@ -4,11 +4,11 @@
 #include <string>
 #include "Engine/Exports.hpp"
 #include "Serialized/Metadata.hpp"
+#include "Vector2.hpp"
 
 namespace acid
 {
 	class Colour;
-	class Vector2;
 	class Vector3;
 
 	/// <summary>
@@ -31,7 +31,7 @@ namespace acid
 		/// </summary>
 		/// <param name="a"> The XY value. </param>
 		/// <param name="b"> The ZW value. </param>
-		Vector4(const Vector2 &a, const Vector2 &b);
+		Vector4(const Vector2f &a, const Vector2f &b);
 
 		/// <summary>
 		/// Constructor for Vector4.

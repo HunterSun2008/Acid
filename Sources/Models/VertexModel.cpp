@@ -2,7 +2,7 @@
 
 namespace acid
 {
-	VertexModel::VertexModel(const Vector3 &position, const Vector2 &uv, const Vector3 &normal, const Vector3 &tangent) :
+	VertexModel::VertexModel(const Vector3 &position, const Vector2f &uv, const Vector3 &normal, const Vector3 &tangent) :
 		m_position(position),
 		m_uv(uv),
 		m_normal(normal),

@@ -86,7 +86,7 @@ namespace acid
 		/// </summary>
 		/// <param name="stage"> The stage to get values from, if not provided the pipelines stage will be used. </param>
 		/// <returns> The dimensions of the render stage. </returns>
-		Vector2 GetDimensions(const std::optional<uint32_t> &stage = {}) const;
+		Vector2f GetDimensions(const std::optional<uint32_t> &stage = {}) const;
 
 		/// <summary>
 		/// Gets the aspect ratio between the render stages wid

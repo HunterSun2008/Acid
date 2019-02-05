@@ -21,7 +21,7 @@ namespace acid
 	Matrix3::Matrix3(const Matrix2 &source)
 	{
 		memset(m_rows, 0, 3 * 3 * sizeof(float));
-		memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2));
+		memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2f));
 		m_rows[2][2] = 1.0f;
 	}
 

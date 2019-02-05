@@ -36,7 +36,7 @@ namespace acid
 		std::vector<VertexWeights> m_vertexWeights;
 
 		std::vector<std::unique_ptr<VertexAnimatedData>> m_positionsList;
-		std::vector<Vector2> m_uvsList;
+		std::vector<Vector2f> m_uvsList;
 		std::vector<Vector3> m_normalsList;
 
 		std::vector<VertexAnimated> m_vertices;

@@ -47,10 +47,10 @@ namespace acid
 		}
 
 		std::vector<VertexModel> vertices = {
-			VertexModel(Vector3(m_min, m_min, 0.0f), Vector2(0.0f, 0.0f)),
-			VertexModel(Vector3(m_max, m_min, 0.0f), Vector2(1.0f, 0.0f)),
-			VertexModel(Vector3(m_max, m_max, 0.0f), Vector2(1.0f, 1.0f)),
-			VertexModel(Vector3(m_min, m_max, 0.0f), Vector2(0.0f, 1.0f)),
+			VertexModel(Vector3(m_min, m_min, 0.0f), Vector2f(0.0f, 0.0f)),
+			VertexModel(Vector3(m_max, m_min, 0.0f), Vector2f(1.0f, 0.0f)),
+			VertexModel(Vector3(m_max, m_max, 0.0f), Vector2f(1.0f, 1.0f)),
+			VertexModel(Vector3(m_min, m_max, 0.0f), Vector2f(0.0f, 1.0f)),
 		};
 		static std::vector<uint32_t> indices = {
 			0, 3, 2,

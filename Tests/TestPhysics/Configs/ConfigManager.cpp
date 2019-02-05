@@ -33,8 +33,8 @@ namespace test
 		m_graphics->Read();
 		auto graphicsData = m_graphics->GetMetadata();
 	//	Renderer::Get()->SetAntialiasing(graphicsData->GetChildDefault<bool>("Antialiasing", true));
-		Window::Get()->SetDimensions(graphicsData->GetChildDefault<Vector2>("Dimensions", -Vector2::One));
-		Window::Get()->SetPosition(graphicsData->GetChildDefault<Vector2>("Position", -Vector2::One));
+		Window::Get()->SetDimensions(graphicsData->GetChildDefault<Vector2i>("Dimensions", Vector2i(-1, -1)));
+		Window::Get()->SetPosition(graphicsData->GetChildDefault<Vector2i>("Position", Vector2i(-1, -1)));
 		Window::Get()->SetBorderless(graphicsData->GetChildDefault<bool>("Borderless", false));
 		Window::Get()->SetResizable(graphicsData->GetChildDefault<bool>("Resizable", true));
 		Window::Get()->SetFloating(graphicsData->GetChildDefault<bool>("Floating", false));
@@ -53,8 +53,8 @@ namespace test
 
 		auto graphicsData = m_graphics->GetMetadata();
 	//	graphicsData->SetChild<bool>("Antialiasing", Renderer::Get()->IsAntialiasing());
-		graphicsData->SetChild<Vector2>("Dimensions", Window::Get()->GetDimensions());
-		graphicsData->SetChild<Vector2>("Position", Window::Get()->GetPosition());
+		graphicsData->SetChild<Vector2i>("Dimensions", Window::Get()->GetDimensions());
+		graphicsData->SetChild<Vector2i>("Position", Window::Get()->GetPosition());
 		graphicsData->SetChild<bool>("Borderless", Window::Get()->IsBorderless());
 		graphicsData->SetChild<bool>("Resizable", Window::Get()->IsResizable());
 		graphicsData->SetChild<bool>("Floating", Window::Get()->IsFloating());

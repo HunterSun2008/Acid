@@ -52,7 +52,7 @@ namespace acid
 		float z = ((col * m_squareSize) - m_sideLength) / 2.0f;
 
 		Vector3 position = Vector3(x, 0.0f, z);
-		Vector2 uv = Vector2(
+		Vector2f uv = Vector2f(
 			static_cast<float>(col) * m_textureScale / static_cast<float>(m_vertexCount),
 			static_cast<float>(row) * m_textureScale / static_cast<float>(m_vertexCount)
 		);

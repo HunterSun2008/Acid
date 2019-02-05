@@ -40,7 +40,7 @@ namespace test
 		std::vector<SubpassType> renderpassSubpasses0 = {
 			SubpassType(0, {0})
 		};
-		renderStages.emplace_back(new RenderStage(RenderpassCreate(renderpassImages0, renderpassSubpasses0, 4096, 4096)));
+		renderStages.emplace_back(new RenderStage(RenderpassCreate(renderpassImages0, renderpassSubpasses0, Vector2i(4096, 4096))));
 
 		std::vector<Attachment> renderpassImages1 = {
 			Attachment(0, "depth", Attachment::Type::Depth, false),
@@ -90,8 +90,7 @@ namespace test
 	void MainRenderer::Update()
 	{
 		auto &renderpassCreate0 = Renderer::Get()->GetRenderStage(0)->GetRenderpassCreate();
-		renderpassCreate0.SetWidth(Shadows::Get()->GetShadowSize());
-		renderpassCreate0.SetHeight(Shadows::Get()->GetShadowSize()); // * RendererShadows::NUM_CASCADES
+		renderpassCreate0.SetSize(Vector2i(Shadows::Get()->GetShadowSize(), Shadows::Get()->GetShadowSize())); // * RendererShadows::NUM_CASCADES
 
 	//	auto &renderpassCreate1 = Renderer::Get()->GetRenderStage(1)->GetRenderpassCreate();
 	//	renderpassCreate1.SetScale(0.75f);

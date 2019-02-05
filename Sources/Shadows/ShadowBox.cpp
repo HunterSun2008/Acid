@@ -191,7 +191,7 @@ namespace acid
 	void ShadowBox::UpdateLightViewMatrix()
 	{
 		m_lightViewMatrix = Matrix4::Identity;
-		float pitch = std::acos(Vector2(m_lightDirection.m_x, m_lightDirection.m_z).Length());
+		float pitch = std::acos(Vector2f(m_lightDirection.m_x, m_lightDirection.m_z).Length());
 		m_lightViewMatrix = m_lightViewMatrix.Rotate(pitch, Vector3::Right);
 		float yaw = std::atan(m_lightDirection.m_x / m_lightDirection.m_z) * Maths::RadToDeg;
 

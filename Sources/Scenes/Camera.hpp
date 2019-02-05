@@ -26,7 +26,7 @@ namespace acid
 			m_viewMatrix(Matrix4()),
 			m_projectionMatrix(Matrix4()),
 			m_viewFrustum(Frustum()),
-			m_viewRay(Ray(false, Vector2(0.5f, 0.5f)))
+			m_viewRay(Ray(false, Vector2f(0.5f, 0.5f)))
 		{
 		}
 

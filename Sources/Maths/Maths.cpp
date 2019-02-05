@@ -39,16 +39,6 @@ namespace acid
 		return result;
 	}
 
-	float Maths::Radians(const float &degrees)
-	{
-		return degrees * DegToRad;
-	}
-
-	float Maths::Degrees(const float &radians)
-	{
-		return radians * RadToDeg;
-	}
-
 	float Maths::WrapDegrees(const float &degrees)
 	{
 		float x = std::fmod(degrees, 360.0f);
@@ -71,37 +61,6 @@ namespace acid
 		}
 
 		return x;
-	}
-
-	float Maths::RoundToPlace(const float &value, const int32_t &place)
-	{
-		float placeMul = std::pow(10.0f, static_cast<float>(place));
-		return std::round(value * placeMul) / placeMul;
-	}
-
-	float Maths::Deadband(const float &min, const float &value)
-	{
-		return std::fabs(value) >= std::fabs(min) ? value : 0.0f;
-	}
-
-	bool Maths::AlmostEqual(const float &a, const float &b, const float &eps)
-	{
-		return std::fabs(a - b) < eps;
-	}
-
-	float Maths::SmoothDamp(const float &current, const float &target, const float &rate)
-	{
-		if (rate < 0.0f)
-		{
-			return target;
-		}
-
-		return current + ((target - current) * rate);
-	}
-
-	float Maths::Lerp(const float &a, const float &b, const float &factor)
-	{
-		return a + factor * (b - a);
 	}
 
 	float Maths::CosLerp(const float &a, const float &b, const float &factor)

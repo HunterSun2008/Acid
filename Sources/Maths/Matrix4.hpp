@@ -11,7 +11,6 @@ namespace acid
 	class Matrix2;
 	class Matrix3;
 	class Quaternion;
-	class Vector2;
 
 	/// <summary>
 	/// Holds a row major 4x4 matrix.
@@ -96,7 +95,7 @@ namespace acid
 		/// </summary>
 		/// <param name="other"> The vector. </param>
 		/// <returns> The resultant matrix. </returns>
-		Matrix4 Translate(const Vector2 &other) const;
+		Matrix4 Translate(const Vector2f &other) const;
 
 		/// <summary>
 		/// Translates this matrix by a vector.

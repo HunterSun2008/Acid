@@ -48,14 +48,22 @@ namespace acid
 		/// </summary>
 		/// <param name="degrees"> The degrees value. </param>
 		/// <returns> The radians value. </returns>
-		static float Radians(const float &degrees);
+		template<typename T>
+		static T Radians(const T &degrees)
+		{
+			return degrees * static_cast<T>(DegToRad);
+		}
 
 		/// <summary>
 		/// Converts radians to degrees.
 		/// </summary>
 		/// <param name="radians"> The radians value. </param>
 		/// <returns> The degrees value. </returns>
-		static float Degrees(const float &radians);
+		template<typename T>
+		static T Degrees(const T &radians)
+		{
+			return radians * static_cast<T>(RadToDeg);
+		}
 
 		/// <summary>
 		/// Normalizes a angle into the range of 0-360.
@@ -77,7 +85,12 @@ namespace acid
 		/// <param name="value"> The value to round. </param>
 		/// <param name="place"> How many places after the decimal to round to. </param>
 		/// <returns> The rounded value. </returns>
-		static float RoundToPlace(const float &value, const int32_t &place);
+		template<typename T>
+		static T RoundToPlace(const T &value, const int32_t &place)
+		{
+			float placeMul = std::pow(10.0f, static_cast<float>(place));
+			return std::round(value * placeMul) / placeMul;
+		}
 
 		/// <summary>
 		/// Used to floor the value if less than the min.
@@ -85,7 +98,11 @@ namespace acid
 		/// <param name="min"> The minimum value. </param>
 		/// <param name="value"> The value. </param>
 		/// <returns> Returns a value with deadband applied. </returns>
-		static float Deadband(const float &min, const float &value);
+		template<typename T>
+		static T Deadband(const T &min, const T &value)
+		{
+			return std::fabs(value) >= std::fabs(min) ? value : 0.0f;
+		}
 
 		/// <summary>
 		/// Checks if two values are almost equal.
@@ -94,7 +111,11 @@ namespace acid
 		/// <param name="b"> The second value. </param>
 		/// <param name="eps"> EPS is the measure of equality. </param>
 		/// <returns> If both are almost equal. </returns>
-		static bool AlmostEqual(const float &a, const float &b, const float &eps);
+		template<typename T>
+		static bool AlmostEqual(const T &a, const T &b, const T &eps)
+		{
+			return std::fabs(a - b) < eps;
+		}
 
 		/// <summary>
 		/// Gradually changes a value to a target.
@@ -103,7 +124,16 @@ namespace acid
 		/// <param name="target"> The target value. </param>
 		/// <param name="rate"> The rate to go from current to the target. </param>
 		/// <returns> The changed value. </returns>
-		static float SmoothDamp(const float &current, const float &target, const float &rate);
+		template<typename T>
+		static T SmoothDamp(const T &current, const T &target, const T &rate)
+		{
+			if (rate < 0.0f)
+			{
+				return target;
+			}
+
+			return current + ((target - current) * rate);
+		}
 
 		/// <summary>
 		/// Interpolates two values by a factor using linear interpolation.
@@ -112,7 +142,11 @@ namespace acid
 		/// <param name="b"> The second value. </param>
 		/// <param name="factor"> The factor value. </param>
 		/// <returns> Returns a interpolation value. </returns>
-		static float Lerp(const float &a, const float &b, const float &factor);
+		template<typename T>
+		static T Lerp(const T &a, const T &b, const float &factor)
+		{
+			return a + factor * (b - a);
+		}
 
 		/// <summary>
 		/// Interpolates two values by a factor using cosine interpolation.

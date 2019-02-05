@@ -10,7 +10,7 @@ namespace acid
 		public UiObject
 	{
 	public:
-		UiPanel(UiObject *parent, const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions),
+		UiPanel(UiObject *parent, const UiBound &rectangle = UiBound(Vector2f(), UiReference::Centre, UiAspect::Position | UiAspect::Dimensions),
 			const bitmask<ScrollBar> &scrollBars = ScrollBar::Vertical | ScrollBar::Horizontal);
 
 		virtual void UpdateObject() override;
@@ -29,7 +29,7 @@ namespace acid
 		std::unique_ptr<UiScrollBar> m_scrollY;
 
 		bitmask<ScrollBar> m_scrollBars;
-		Vector2 m_min;
-		Vector2 m_max;
+		Vector2f m_min;
+		Vector2f m_max;
 	};
 }

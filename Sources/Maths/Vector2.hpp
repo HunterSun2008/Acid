@@ -2,15 +2,17 @@
 
 #include <ostream>
 #include <string>
-#include "Engine/Exports.hpp"
+#include <cassert>
 #include "Serialized/Metadata.hpp"
+#include "Maths.hpp"
 
 namespace acid
 {
 	/// <summary>
 	/// Holds a 2-tuple vector.
 	/// </summary>
-	class ACID_EXPORT Vector2
+	template<typename T = float>
+	class Vector2
 	{
 	public:
 		/// <summary>
@@ -18,49 +20,88 @@ namespace acid
 		/// </summary>
 		/// <param name="x"> Start x. </param>
 		/// <param name="y"> Start y. </param>
-		Vector2(const float &x = 0.0f, const float &y = 0.0f);
+		Vector2(const T &x = 0, const T &y = 0) :
+			m_x(x),
+			m_y(y)
+		{
+		}
 
 		/// <summary>
 		/// Adds this vector to another vector.
 		/// </summary>
 		/// <param name="other"> The other vector. </param>
 		/// <returns> The resultant vector. </returns>
-		Vector2 Add(const Vector2 &other) const;
+		template<typename X>
+		auto Add(const Vector2<X> &other) const
+		{
+			return Vector2(m_x + other.m_x, m_y + other.m_y);
+		}
 
 		/// <summary>
 		/// Subtracts this vector to another vector.
 		/// </summary>
 		/// <param name="other"> The other vector. </param>
 		/// <returns> The resultant vector. </returns>
-		Vector2 Subtract(const Vector2 &other) const;
+		template<typename X>
+		auto Subtract(const Vector2<X> &other) const
+		{
+			return Vector2(m_x - other.m_x, m_y - other.m_y);
+		}
 
 		/// <summary>
 		/// Multiplies this vector with another vector.
 		/// </summary>
 		/// <param name="other"> The other vector. </param>
 		/// <returns> The resultant vector. </returns>
-		Vector2 Multiply(const Vector2 &other) const;
+		template<typename X>
+		auto Multiply(const Vector2<X> &other) const
+		{
+			return Vector2(m_x * other.m_x, m_y * other.m_y);
+		}
 
 		/// <summary>
 		/// Divides this vector by another vector.
 		/// </summary>
 		/// <param name="other"> The other vector. </param>
 		/// <returns> The resultant vector. </returns>
-		Vector2 Divide(const Vector2 &other) const;
+		template<typename X>
+		auto Divide(const Vector2<X> &other) const
+		{
+			return Vector2(m_x / other.m_x, m_y / other.m_y);
+		}
 
 		/// <summary>
 		/// Calculates the angle between this vector and another vector.
 		/// </summary>
 		/// <param name="other"> The other vector. </param>
 		/// <returns> The angle, in radians. </returns>
-		float Angle(const Vector2 &other) const;
+		template<typename X>
+		float Angle(const Vector2<X> &other) const
+		{
+			float dls = Dot(other) / (Length() * other.Length());
+
+			if (dls < -1.0f)
+			{
+				dls = -1.0f;
+			}
+			else if (dls > 1.0f)
+			{
+				dls = 1.0f;
+			}
+
+			return std::acos(dls);
+		}
 
 		/// <summary>
 		/// Calculates the dot product of the this vector and another vector.
 		/// </summary>
 		/// <param name="other"> The other vector. </param>
 		/// <returns> The dot product. </returns>
-		float Dot(const Vector2 &other) const;
+		template<typename X>
+		float Dot(const Vector2<X> &other) const
+		{
+			return m_x * other.m_x + m_y * other.m_y;
+		}
 
 		/// <summary>
 		/// Calculates the linear interpolation between this vector and another vector.
@@ -68,21 +109,35 @@ namespace acid
 		/// <param name="other"> The other quaternion. </param>
 		/// <param name="progression"> The progression. </param>
 		/// <returns> Left lerp right. </returns>
-		Vector2 Lerp(const Vector2 &other, const float &progression) const;
+		template<typename X, typename Y>
+		auto Lerp(const Vector2<X> &other, const Y &progression) const
+		{
+			auto ta = *this * (static_cast<Y>(1) - progression);
+			auto tb = other * progression;
+			return ta + tb;
+		}
 
 		/// <summary>
 		/// Scales this vector by a scalar.
 		/// </summary>
 		/// <param name="scalar"> The scalar value. </param>
 		/// <returns> The scaled vector. </returns>
-		Vector2 Scale(const float &scalar) const;
+		template<typename X>
+		Vector2 Scale(const X &scalar) const
+		{
+			return Vector2(m_x * scalar, m_y * scalar);
+		}
 
 		/// <summary>
 		/// Rotates this vector by a angle around the origin.
 		/// </summary>
 		/// <param name="angle"> The angle to rotate by, in radians. </param>
 		/// <returns> The rotated vector. </returns>
-		Vector2 Rotate(const float &angle) const;
+		template<typename X>
+		Vector2 Rotate(const X &angle) const
+		{
+			return Vector2(m_x * std::cos(angle) - m_y * std::sin(angle), m_x * std::sin(angle) + m_y * std::cos(angle));
+		}
 
 		/// <summary>
 		/// Rotates this vector by a angle around a rotation axis.
@@ -90,64 +145,104 @@ namespace acid
 		/// <param name="angle"> The angle to rotate by, in radians. </param>
 		/// <param name="rotationAxis"> The point to rotate the vector around. </param>
 		/// <returns> The rotated vector. </returns>
-		Vector2 Rotate(const float &angle, const Vector2 &rotationAxis) const;
+		template<typename X, typename Y>
+		auto Rotate(const X &angle, const Vector2<Y> &rotationAxis) const
+		{
+			return Vector2(((m_x - rotationAxis.m_x) * std::cos(angle)) - ((m_y - rotationAxis.m_y) * std::sin(angle) + rotationAxis.m_x),
+				((m_x - rotationAxis.m_x) * std::sin(angle)) + ((m_y - rotationAxis.m_y) * std::cos(angle) + rotationAxis.m_y));
+		}
 
 		/// <summary>
 		/// Negates this vector.
 		/// </summary>
 		/// <returns> The negated vector. </returns>
-		Vector2 Negate() const;
+		Vector2 Negate() const
+		{
+			return Vector2(-m_x, -m_y);
+		}
 
 		/// <summary>
 		/// Normalizes this vector.
 		/// </summary>
 		/// <returns> The normalized vector. </returns>
-		Vector2 Normalize() const;
+		Vector2 Normalize() const
+		{
+			auto l = Length();
+			return Vector2(m_x / l, m_y / l);
+		}
 
 		/// <summary>
 		/// Gets the length squared of this vector.
 		/// </summary>
 		/// <returns> The length squared. </returns>
-		float LengthSquared() const;
+		auto LengthSquared() const
+		{
+			return m_x * m_x + m_y * m_y;
+		}
 
 		/// <summary>
 		/// Gets the length of this vector.
 		/// </summary>
 		/// <returns> The length. </returns>
-		float Length() const;
+		auto Length() const
+		{
+			return std::sqrt(LengthSquared());
+		}
 
 		/// <summary>
 		/// Gets the maximum value in this vector.
 		/// </summary>
 		/// <returns> The largest components. </returns>
-		float MaxComponent() const;
+		auto MaxComponent() const
+		{
+			return std::max(m_x, m_y);
+		}
 
 		/// <summary>
 		/// Gets the lowest value in this vector.
 		/// </summary>
 		/// <returns> The smallest components. </returns>
-		float MinComponent() const;
+		auto MinComponent() const
+		{
+			return std::min(m_x, m_y);
+		}
 
 		/// <summary>
 		/// Gets the distance between this vector and another vector.
 		/// </summary>
 		/// <param name="other"> The other vector. </param>
 		/// <returns> The squared distance. </returns>
-		float DistanceSquared(const Vector2 &other) const;
+		template<typename X>
+		auto DistanceSquared(const Vector2<X> &other) const
+		{
+			auto dx = m_x - other.m_x;
+			auto dy = m_y - other.m_y;
+			return dx * dx + dy * dy;
+		}
 
 		/// <summary>
 		/// Gets the between this vector and another vector.
 		/// </summary>
 		/// <param name="other"> The other vector. </param>
 		/// <returns> The distance. </returns>
-		float Distance(const Vector2 &other) const;
+		template<typename X>
+		auto Distance(const Vector2<X> &other) const
+		{
+			return std::sqrt(DistanceSquared(other));
+		}
 
 		/// <summary>
 		/// Gets the vector distance between this vector and another vector.
 		/// </summary>
 		/// <param name="other"> The other vector. </param>
 		/// <returns> The vector distance. </returns>
-		Vector2 DistanceVector(const Vector2 &other) const;
+		template<typename X>
+		auto DistanceVector(const Vector2<X> &other) const
+		{
+			auto dx = m_x - other.m_x;
+			auto dy = m_y - other.m_y;
+			return Vector2(dx * dx, dy * dy);
+		}
 
 		/// <summary>
 		/// Gets if this vector is in a triangle.
@@ -156,7 +251,14 @@ namespace acid
 		/// <param name="v2"> The second triangle vertex. </param>
 		/// <param name="v3"> The third triangle vertex. </param>
 		/// <returns> If this vector is in a triangle. </returns>
-		bool InTriangle(const Vector2 &v1, const Vector2 &v2, const Vector2 &v3) const;
+		template<typename X, typename Y, typename Z>
+		bool InTriangle(const Vector2<X> &v1, const Vector2<Y> &v2, const Vector2<Z> &v3) const
+		{
+			bool b1 = ((m_x - v2.m_x) * (v1.m_y - v2.m_y) - (v1.m_x - v2.m_x) * (m_y - v2.m_y)) < 0.0f;
+			bool b2 = ((m_x - v3.m_x) * (v2.m_y - v3.m_y) - (v2.m_x - v3.m_x) * (m_y - v3.m_y)) < 0.0f;
+			bool b3 = ((m_x - v1.m_x) * (v3.m_y - v1.m_y) - (v3.m_x - v1.m_x) * (m_y - v1.m_y)) < 0.0f;
+			return ((b1 == b2) & (b2 == b3));
+		}
 
 		/// <summary>
 		/// Gradually changes this vector to a target.
@@ -164,19 +266,33 @@ namespace acid
 		/// <param name="target"> The target vector. </param>
 		/// <param name="rate"> The rate to go from current to the target. </param>
 		/// <returns> The changed vector. </returns>
-		Vector2 SmoothDamp(const Vector2 &target, const Vector2 &rate) const;
+		template<typename X, typename Y>
+		auto SmoothDamp(const Vector2<X> &target, const Vector2<Y> &rate) const
+		{
+			return Vector2(Maths::SmoothDamp(m_x, target.m_x, rate.m_x), Maths::SmoothDamp(m_y, target.m_y, rate.m_y));
+		}
 
 		/// <summary>
 		/// Converts from rectangular to spherical coordinates, this vector is in cartesian (x, y).
 		/// </summary>
 		/// <returns> The polar coordinates (radius, theta). </returns>
-		Vector2 CartesianToPolar() const;
+		Vector2 CartesianToPolar() const
+		{
+			float radius = std::sqrt(m_x * m_x + m_y * m_y);
+			float theta = std::atan2(m_y, m_x);
+			return Vector2(radius, theta);
+		}
 
 		/// <summary>
 		/// Converts from spherical to rectangular coordinates, this vector is in polar (radius, theta).
 		/// </summary>
 		/// <returns> The cartesian coordinates (x, y). </returns>
-		Vector2 PolarToCartesian() const;
+		Vector2 PolarToCartesian() const
+		{
+			float x = m_x * std::cos(m_y);
+			float y = m_x * std::sin(m_y);
+			return Vector2(x, y);
+		}
 
 		/// <summary>
 		/// Gets the lowest vector size.
@@ -184,7 +300,11 @@ namespace acid
 		/// <param name="a"> The first vector to get values from. </param>
 		/// <param name="b"> The second vector to get values from. </param>
 		/// <returns> The lowest vector. </returns>
-		static Vector2 MinVector(const Vector2 &a, const Vector2 &b);
+		template<typename X, typename Y>
+		static auto MinVector(const Vector2<X> &a, const Vector2<Y> &b)
+		{
+			return Vector2(std::min(a.m_x, b.m_x), std::min(a.m_y, b.m_y));
+		}
 
 		/// <summary>
 		/// Gets the maximum vector size.
@@ -192,106 +312,235 @@ namespace acid
 		/// <param name="a"> The first vector to get values from. </param>
 		/// <param name="b"> The second vector to get values from. </param>
 		/// <returns> The maximum vector. </returns>
-		static Vector2 MaxVector(const Vector2 &a, const Vector2 &b);
+		template<typename X, typename Y>
+		static auto MaxVector(const Vector2<X> &a, const Vector2<Y> &b)
+		{
+			return Vector2(std::max(a.m_x, b.m_x), std::max(a.m_y, b.m_y));
+		}
 
-		float GetX() const { return m_x; }
+		void Decode(const Metadata &metadata)
+		{
+			metadata.GetChild("x", m_x);
+			metadata.GetChild("y", m_y);
+		}
 
-		void SetX(const float &x) { m_x = x; }
+		void Encode(Metadata &metadata) const
+		{
+			metadata.SetChild("x", m_x);
+			metadata.SetChild("y", m_y);
+		}
 
-		float GetY() const { return m_y; }
+		template<typename X>
+		bool operator==(const Vector2<X> &other) const
+		{
+			return m_x == other.m_x && m_y == other.m_x;
+		}
 
-		void SetY(const float &y) { m_y = y; }
+		template<typename X>
+		bool operator!=(const Vector2<X> &other) const
+		{
+			return !(*this == other);
+		}
 
-		void Decode(const Metadata &metadata);
+		template<typename X>
+		bool operator<(const Vector2<X> &other) const
+		{
+			return m_x < other.m_x && m_y < other.m_y;
+		}
 
-		void Encode(Metadata &metadata) const;
+		template<typename X>
+		bool operator<=(const Vector2<X> &other) const
+		{
+			return m_x <= other.m_x && m_y <= other.m_y;
+		}
 
-		bool operator==(const Vector2 &other) const;
+		template<typename X>
+		bool operator>(const Vector2<X> &other) const
+		{
+			return m_x > other.m_x && m_y > other.m_y;
+		}
 
-		bool operator!=(const Vector2 &other) const;
+		template<typename X>
+		bool operator>=(const Vector2<X> &other) const
+		{
+			return m_x >= other.m_x && m_y >= other.m_y;
+		}
 
-		bool operator<(const Vector2 &other) const;
+		template<typename X>
+		bool operator==(const X &value) const
+		{
+			return m_x == value && m_y == value;
+		}
 
-		bool operator<=(const Vector2 &other) const;
+		template<typename X>
+		bool operator!=(const X &value) const
+		{
+			return !(*this == value);
+		}
 
-		bool operator>(const Vector2 &other) const;
+		Vector2 operator-() const
+		{
+			return Negate();
+		}
 
-		bool operator>=(const Vector2 &other) const;
+		const T &operator[](const uint32_t &index) const
+		{
+			assert(index < 2);
+			return m_elements[index];
+		}
 
-		bool operator==(const float &value) const;
+		T &operator[](const uint32_t &index)
+		{
+			assert(index < 2);
+			return m_elements[index];
+		}
 
-		bool operator!=(const float &value) const;
+		template<typename X>
+		Vector2 &operator+=(const Vector2<X> &other)
+		{
+			return *this = Add(other);
+		}
 
-		Vector2 operator-() const;
+		template<typename X>
+		Vector2 &operator-=(const Vector2<X> &other)
+		{
+			return *this = Subtract(other);
+		}
 
-		const float &operator[](const uint32_t &index) const;
+		template<typename X>
+		Vector2 &operator*=(const Vector2<X> &other)
+		{
+			return *this = Multiply(other);
+		}
 
-		float &operator[](const uint32_t &index);
+		template<typename X>
+		Vector2 &operator/=(const Vector2<X> &other)
+		{
+			return *this = Divide(other);
+		}
 
-		ACID_EXPORT friend Vector2 operator+(const Vector2 &left, const Vector2 &right);
+		template<typename X>
+		Vector2 &operator+=(const X &other)
+		{
+			return *this = Add(Vector2(other, other));
+		}
 
-		ACID_EXPORT friend Vector2 operator-(const Vector2 &left, const Vector2 &right);
+		template<typename X>
+		Vector2 &operator-=(const X &other)
+		{
+			return *this = Subtract(Vector2(other, other));
+		}
 
-		ACID_EXPORT friend Vector2 operator*(const Vector2 &left, const Vector2 &right);
+		Vector2 &operator*=(const T &other)
+		{
+			return *this = Multiply(Vector2(other, other));
+		}
 
-		ACID_EXPORT friend Vector2 operator/(const Vector2 &left, const Vector2 &right);
+		Vector2 &operator/=(const T &other)
+		{
+			return *this = Divide(Vector2(other, other));
+		}
 
-		ACID_EXPORT friend Vector2 operator+(const float &left, const Vector2 &right);
+		friend std::ostream &operator<<(std::ostream &stream, const Vector2 &vector)
+		{
+			stream << vector.ToString();
+			return stream;
+		}
 
-		ACID_EXPORT friend Vector2 operator-(const float &left, const Vector2 &right);
-
-		ACID_EXPORT friend Vector2 operator*(const float &left, const Vector2 &right);
-
-		ACID_EXPORT friend Vector2 operator/(const float &left, const Vector2 &right);
-
-		ACID_EXPORT friend Vector2 operator+(const Vector2 &left, const float &right);
-
-		ACID_EXPORT friend Vector2 operator-(const Vector2 &left, const float &right);
-
-		ACID_EXPORT friend Vector2 operator*(const Vector2 &left, const float &right);
-
-		ACID_EXPORT friend Vector2 operator/(const Vector2 &left, const float &right);
-
-		Vector2 &operator+=(const Vector2 &other);
-
-		Vector2 &operator-=(const Vector2 &other);
-
-		Vector2 &operator*=(const Vector2 &other);
-
-		Vector2 &operator/=(const Vector2 &other);
-
-		Vector2 &operator+=(const float &other);
-
-		Vector2 &operator-=(const float &other);
-
-		Vector2 &operator*=(const float &other);
-
-		Vector2 &operator/=(const float &other);
-
-		ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Vector2 &vector);
-
-		std::string ToString() const;
-
-		static const Vector2 Zero;
-		static const Vector2 One;
-		static const Vector2 Left;
-		static const Vector2 Right;
-		static const Vector2 Up;
-		static const Vector2 Down;
-		static const Vector2 PositiveInfinity;
-		static const Vector2 NegativeInfinity;
+		std::string ToString() const
+		{
+			std::stringstream result;
+			result << "Vector2(" << m_x << ", " << m_y << ")";
+			return result.str();
+		}
 
 		union
 		{
 			struct
 			{
-				float m_elements[2];
+				T m_elements[2];
 			};
 
 			struct
 			{
-				float m_x, m_y;
+				T m_x, m_y;
 			};
 		};
 	};
+
+	template<typename X, typename Y>
+	auto operator+(const Vector2<X> &left, const Vector2<Y> &right)
+	{
+		return left.Add(right);
+	}
+
+	template<typename X, typename Y>
+	auto operator-(const Vector2<X> &left, const Vector2<Y> &right)
+	{
+		return left.Subtract(right);
+	}
+
+	template<typename X, typename Y>
+	auto operator*(const Vector2<X> &left, const Vector2<Y> &right)
+	{
+		return left.Multiply(right);
+	}
+
+	template<typename X, typename Y>
+	auto operator/(const Vector2<X> &left, const Vector2<Y> &right)
+	{
+		return left.Divide(right);
+	}
+
+	template<typename X, typename Y>
+	auto operator+(const X &left, const Vector2<Y> &right)
+	{
+		return Vector2(left, left).Add(right);
+	}
+
+	template<typename X, typename Y>
+	auto operator-(const X &left, const Vector2<Y> &right)
+	{
+		return Vector2(left, left).Subtract(right);
+	}
+
+	template<typename X, typename Y>
+	auto operator*(const X &left, const Vector2<Y> &right)
+	{
+		return Vector2(left, left).Multiply(right);
+	}
+
+	template<typename X, typename Y>
+	auto operator/(const X &left, const Vector2<Y> &right)
+	{
+		return Vector2(left, left).Divide(right);
+	}
+
+	template<typename X, typename Y>
+	auto operator+(const Vector2<X> &left, const Y &right)
+	{
+		return left.Add(Vector2(right, right));
+	}
+
+	template<typename X, typename Y>
+	auto operator-(const Vector2<X> &left, const Y &right)
+	{
+		return left.Subtract(Vector2(right, right));
+	}
+
+	template<typename X, typename Y>
+	auto operator*(const Vector2<X> &left, const Y &right)
+	{
+		return left.Multiply(Vector2(right, right));
+	}
+
+	template<typename X, typename Y>
+	auto operator/(const Vector2<X> &left, const Y &right)
+	{
+		return left.Divide(Vector2(right, right));
+	}
+
+	using Vector2f = Vector2<float>;
+	using Vector2d = Vector2<double>;
+	using Vector2i = Vector2<int32_t>;
 }

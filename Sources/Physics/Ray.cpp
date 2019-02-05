@@ -2,14 +2,14 @@
 
 namespace acid
 {
-	const Ray Ray::Zero = Ray(false, Vector2::Zero);
+	const Ray Ray::Zero = Ray(false, Vector2f());
 
-	Ray::Ray(const bool &useMouse, const Vector2 &screenStart) :
+	Ray::Ray(const bool &useMouse, const Vector2f &screenStart) :
 		m_useMouse(useMouse),
-		m_screenStart(Vector2(screenStart)),
+		m_screenStart(Vector2f(screenStart)),
 		m_viewMatrix(Matrix4()),
 		m_projectionMatrix(Matrix4()),
-		m_normalizedCoords(Vector2()),
+		m_normalizedCoords(Vector2f()),
 		m_clipCoords(Vector4()),
 		m_eyeCoords(Vector4()),
 		m_invertedProjection(Matrix4()),
@@ -20,7 +20,7 @@ namespace acid
 	{
 	}
 
-	void Ray::Update(const Vector3 &currentPosition, const Vector2 &mousePosition, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix)
+	void Ray::Update(const Vector3 &currentPosition, const Vector2f &mousePosition, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix)
 	{
 		m_origin = currentPosition;
 

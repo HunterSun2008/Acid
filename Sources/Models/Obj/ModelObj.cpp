@@ -64,7 +64,7 @@ namespace acid
 
 		std::vector<uint32_t> indices = {};
 		std::vector<std::unique_ptr<VertexModelData>> verticesList = {};
-		std::vector<Vector2> uvsList = {};
+		std::vector<Vector2f> uvsList = {};
 		std::vector<Vector3> normalsList = {};
 
 		for (const auto &line : lines)
@@ -90,7 +90,7 @@ namespace acid
 				}
 				else if (prefix == "vt")
 				{
-					Vector2 uv = Vector2(String::From<float>(split[1]),
+					Vector2f uv = Vector2f(String::From<float>(split[1]),
 					                     1.0f - String::From<float>(split[2]));
 					uvsList.emplace_back(uv);
 				}
@@ -153,7 +153,7 @@ namespace acid
 			}
 
 			Vector3 position = current->GetPosition();
-			Vector2 uvs = uvsList[current->GetUvIndex()];
+			Vector2f uvs = uvsList[current->GetUvIndex()];
 			Vector3 normal = normalsList[current->GetNormalIndex()];
 			Vector3 tangent = current->GetAverageTangent();
 			vertices.emplace_back(VertexModel(position, uvs, normal, tangent));
@@ -220,14 +220,14 @@ namespace acid
 		return duplicateVertex;
 	}
 
-	void ModelObj::CalculateTangents(VertexModelData *v0, VertexModelData *v1, VertexModelData *v2, std::vector<Vector2> &uvs)
+	void ModelObj::CalculateTangents(VertexModelData *v0, VertexModelData *v1, VertexModelData *v2, std::vector<Vector2f> &uvs)
 	{
-		Vector2 uv0 = uvs[v0->GetUvIndex()];
-		Vector2 uv1 = uvs[v1->GetUvIndex()];
-		Vector2 uv2 = uvs[v2->GetUvIndex()];
+		Vector2f uv0 = uvs[v0->GetUvIndex()];
+		Vector2f uv1 = uvs[v1->GetUvIndex()];
+		Vector2f uv2 = uvs[v2->GetUvIndex()];
 
-		Vector2 deltaUv1 = uv1 - uv0;
-		Vector2 deltaUv2 = uv2 - uv0;
+		Vector2f deltaUv1 = uv1 - uv0;
+		Vector2f deltaUv2 = uv2 - uv0;
 		float r = 1.0f / (deltaUv1.m_x * deltaUv2.m_y - deltaUv1.m_y * deltaUv2.m_x);
 
 		Vector3 deltaPos1 = v1->GetPosition() - v0->GetPosition();

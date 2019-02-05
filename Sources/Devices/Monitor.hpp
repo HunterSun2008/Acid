@@ -55,13 +55,13 @@ namespace acid
 		/// Gets the position of the monitor's viewport on the virtual screen.
 		/// </summary>
 		/// <returns> The position of the monitor's viewport. </returns>
-		Vector2 GetPosition() const;
+		Vector2f GetPosition() const;
 
 		/// <summary>
 		/// Gets the physical size of the monitor.
 		/// </summary>
 		/// <returns> The size, in millimetres, of the display area. </returns>
-		Vector2 GetDimensions() const;
+		Vector2f GetDimensions() const;
 
 		/// <summary>
 		/// Gets the name of this monitor.

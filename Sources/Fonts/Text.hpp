@@ -308,7 +308,7 @@ namespace acid
 
 		void AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<VertexModel> &vertices);
 
-		void NormalizeQuad(Vector2 &bounding, std::vector<VertexModel> &vertices);
+		void NormalizeQuad(Vector2f &bounding, std::vector<VertexModel> &vertices);
 
 		DescriptorsHandler m_descriptorSet;
 		UniformHandler m_uniformObject;

@@ -221,10 +221,10 @@ namespace acid
 		glfwSetWindowSize(m_window, width, height);
 	}
 
-	void Window::SetDimensions(const Vector2 &size)
+	void Window::SetDimensions(const Vector2i &size)
 	{
-		SetDimensions(size.m_x == -1.0f ? GetWidth() : static_cast<uint32_t>(size.m_x),
-			size.m_y == -1.0f ? GetHeight() : static_cast<uint32_t>(size.m_y));
+		SetDimensions(size.m_x == -1.0f ? GetWidth() : size.m_x,
+			size.m_y == -1.0f ? GetHeight() : size.m_y);
 	}
 
 	void Window::SetPosition(const uint32_t &x, const uint32_t &y)
@@ -232,10 +232,10 @@ namespace acid
 		glfwSetWindowPos(m_window, x, y);
 	}
 
-	void Window::SetPosition(const Vector2 &position)
+	void Window::SetPosition(const Vector2i &position)
 	{
-		SetPosition(position.m_x == -1.0f ? GetPositionX() : static_cast<uint32_t>(position.m_x),
-			position.m_y == -1.0f ? GetPositionY() : static_cast<uint32_t>(position.m_y));
+		SetPosition(position.m_x == -1.0f ? GetPositionX() : position.m_x,
+			position.m_y == -1.0f ? GetPositionY() : position.m_y);
 	}
 
 	void Window::SetTitle(const std::string &title)

@@ -8,7 +8,7 @@ namespace acid
 {
 	UiScrollBar::UiScrollBar(UiObject *parent, const ScrollBar &type, const UiBound &rectangle) :
 		UiObject(parent, rectangle),
-		m_scroll(std::make_unique<Gui>(this, UiBound(Vector2(), UiReference::TopLeft, UiAspect::Position | UiAspect::Scale),
+		m_scroll(std::make_unique<Gui>(this, UiBound(Vector2f(), UiReference::TopLeft, UiAspect::Position | UiAspect::Scale),
 			Texture::Create("Guis/Button_Filled.png"), UiInputButton::PrimaryColour)),
 		m_index(type == ScrollBar::Horizontal ? 0 : 1),
 		m_updating(false),
@@ -19,7 +19,7 @@ namespace acid
 		Mouse::Get()->GetOnScroll() += [this](float xOffset, float yOffset) {
 			if (GetParent()->IsSelected() && !m_updating && m_scroll->IsEnabled())
 			{
-				Vector2 position = Vector2::Zero;
+				Vector2f position = Vector2f();
 				position[m_index] = ScrollByDelta(-0.06f * (m_index == 0 ? xOffset : yOffset));
 				m_scroll->GetRectangle().SetPosition(position);
 			}
@@ -39,7 +39,7 @@ namespace acid
 				m_updating = false;
 			}
 
-			Vector2 position = Vector2::Zero;
+			Vector2f position = Vector2f();
 			position[m_index] = ScrollByPosition(Mouse::Get()->GetPosition()[m_index]);
 			m_scroll->GetRectangle().SetPosition(position);
 			CancelEvent(MouseButton::Left);

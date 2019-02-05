@@ -14,7 +14,7 @@ namespace acid
 		m_texture(texture),
 		m_numberOfRows(1),
 		m_selectedRow(0),
-		m_atlasOffset(Vector2::Zero),
+		m_atlasOffset(Vector2f()),
 		m_ninePatches(Vector4::Zero),
 		m_colourDriver(std::make_unique<DriverConstant<Colour>>(colourOffset)),
 		m_colourOffset(Colour())
@@ -26,7 +26,7 @@ namespace acid
 		int32_t numberOfRows = m_texture != nullptr ? m_numberOfRows : 1;
 		int32_t column = m_selectedRow % numberOfRows;
 		int32_t row = m_selectedRow / numberOfRows;
-		m_atlasOffset = Vector2(static_cast<float>(column) / static_cast<float>(numberOfRows), static_cast<float>(row) / static_cast<float>(numberOfRows));
+		m_atlasOffset = Vector2f(static_cast<float>(column) / static_cast<float>(numberOfRows), static_cast<float>(row) / static_cast<float>(numberOfRows));
 
 		m_colourOffset = m_colourDriver->Update(Engine::Get()->GetDelta());
 

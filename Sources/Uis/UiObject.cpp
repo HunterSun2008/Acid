@@ -19,8 +19,8 @@ namespace acid
 		m_alpha(1.0f),
 		m_scaleDriver(std::make_unique<DriverConstant<float>>(1.0f)),
 		m_scale(1.0f),
-		m_screenDimensions(Vector2()),
-		m_screenPosition(Vector2()),
+		m_screenDimensions(Vector2f()),
+		m_screenPosition(Vector2f()),
 		m_screenDepth(0.0f),
 		m_screenAlpha(1.0f),
 		m_screenScale(1.0f),
@@ -119,8 +119,8 @@ namespace acid
 
 		if (Mouse::Get()->IsWindowSelected() && Window::Get()->IsFocused())
 		{
-			Vector2 distance = Mouse::Get()->GetPosition() - m_screenPosition;
-			return distance >= Vector2::Zero && distance <= m_screenDimensions;
+			Vector2f distance = Mouse::Get()->GetPosition() - m_screenPosition;
+			return distance >= Vector2f() && distance <= m_screenDimensions;
 		}
 
 		return false;

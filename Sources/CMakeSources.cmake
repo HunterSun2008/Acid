@@ -311,7 +311,6 @@ set(_temp_acid_sources
 		Maths/Time.cpp
 		Maths/Timer.cpp
 		Maths/Transform.cpp
-		Maths/Vector2.cpp
 		Maths/Vector3.cpp
 		Maths/Vector4.cpp
 		Meshes/Mesh.cpp

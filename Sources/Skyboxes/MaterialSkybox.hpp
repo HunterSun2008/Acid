@@ -44,14 +44,14 @@ namespace acid
 
 		void SetFogColour(const Colour &fogColour) { m_fogColour = fogColour; }
 
-		const Vector2 &GetFogLimits() const { return m_fogLimits; }
+		const Vector2f &GetFogLimits() const { return m_fogLimits; }
 
-		void SetFogLimits(const Vector2 &fogLimits) { m_fogLimits = fogLimits; }
+		void SetFogLimits(const Vector2f &fogLimits) { m_fogLimits = fogLimits; }
 	private:
 		std::shared_ptr<Cubemap> m_cubemap;
 		Colour m_skyColour;
 		float m_blend;
 		Colour m_fogColour;
-		Vector2 m_fogLimits;
+		Vector2f m_fogLimits;
 	};
 }

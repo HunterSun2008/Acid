@@ -65,21 +65,14 @@ namespace acid
 		uint32_t lastWidth = m_width;
 		uint32_t lastHeight = m_height;
 
-		if (m_renderpassCreate.GetWidth())
+		if (m_renderpassCreate.GetSize())
 		{
-			m_width = *m_renderpassCreate.GetWidth();
+			m_width = m_renderpassCreate.GetSize()->m_x;
+			m_height = m_renderpassCreate.GetSize()->m_y;
 		}
 		else
 		{
 			m_width = Window::Get()->GetWidth();
-		}
-
-		if (m_renderpassCreate.GetHeight())
-		{
-			m_height = *m_renderpassCreate.GetHeight();
-		}
-		else
-		{
 			m_height = Window::Get()->GetHeight();
 		}
 

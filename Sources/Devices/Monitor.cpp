@@ -11,20 +11,20 @@ namespace acid
 	{
 	}
 
-	Vector2 Monitor::GetPosition() const
+	Vector2f Monitor::GetPosition() const
 	{
 		int32_t xpos;
 		int32_t ypos;
 		glfwGetMonitorPos(m_monitor, &xpos, &ypos);
-		return Vector2(xpos, ypos);
+		return Vector2f(xpos, ypos);
 	}
 
-	Vector2 Monitor::GetDimensions() const
+	Vector2f Monitor::GetDimensions() const
 	{
 		int32_t widthMM;
 		int32_t heightMM;
 		glfwGetMonitorPhysicalSize(m_monitor, &widthMM, &heightMM);
-		return Vector2(widthMM, heightMM);
+		return Vector2f(widthMM, heightMM);
 	}
 
 	std::string Monitor::GetName() const

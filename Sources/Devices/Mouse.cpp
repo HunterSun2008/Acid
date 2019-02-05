@@ -150,7 +150,7 @@ namespace acid
 		glfwSetCursorPos(Window::Get()->GetWindow(), cursorX * Window::Get()->GetWidth(), cursorY * Window::Get()->GetHeight());
 	}
 
-	void Mouse::SetPosition(const Vector2 &position)
+	void Mouse::SetPosition(const Vector2f &position)
 	{
 		SetPosition(position.m_x == -1.0f ? GetPositionX() : static_cast<uint32_t>(position.m_x),
 			position.m_y == -1.0f ? GetPositionY() : static_cast<uint32_t>(position.m_y));

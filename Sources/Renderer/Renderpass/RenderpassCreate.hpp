@@ -84,18 +84,16 @@ namespace acid
 		std::vector<Attachment> m_images;
 		std::vector<SubpassType> m_subpasses;
 		
-		std::optional<uint32_t> m_width;
-		std::optional<uint32_t> m_height;
-		Vector2 m_scale;
-		Vector2 m_offset;
+		std::optional<Vector2i> m_size;
+		Vector2f m_scale;
+		Vector2i m_offset;
 	public:
-		RenderpassCreate(const std::vector<Attachment> &images = {}, const std::vector<SubpassType> &subpasses = {}, const std::optional<uint32_t> &width = {}, const std::optional<uint32_t> &height = {}) :
+		RenderpassCreate(const std::vector<Attachment> &images = {}, const std::vector<SubpassType> &subpasses = {}, const std::optional<Vector2i> &size = {}) :
 			m_images(images),
 			m_subpasses(subpasses),
-			m_width(width),
-			m_height(height),
-			m_scale(Vector2::One),
-			m_offset(Vector2::Zero)
+			m_size(size),
+			m_scale(Vector2f(1.0f, 1.0f)),
+			m_offset(Vector2i(0, 0))
 		{
 		}
 
@@ -131,20 +129,16 @@ namespace acid
 
 		const std::vector<SubpassType> &GetSubpasses() const { return m_subpasses; }
 
-		const std::optional<uint32_t> &GetWidth() const { return m_width; }
+		const std::optional<Vector2i> &GetSize() const { return m_size; }
 
-		void SetWidth(const std::optional<uint32_t> &width) { m_width = width; }
+		void SetSize(const std::optional<Vector2i> &size) { m_size = size; }
 
-		const std::optional<uint32_t> &GetHeight() const { return m_height; }
+		const Vector2f& GetScale() const { return m_scale; }
 
-		void SetHeight(const std::optional<uint32_t> &height) { m_height = height; }
+		void SetScale(const Vector2f &scale) { m_scale = scale; }
 
-		const Vector2& GetScale() const { return m_scale; }
+		const Vector2i &GetOffset() const { return m_offset; }
 
-		void SetScale(const Vector2 &scale) { m_scale = scale; }
-
-		const Vector2 &GetOffset() const { return m_offset; }
-
-		void SetOffset(const Vector2 &offset) { m_offset = offset; }
+		void SetOffset(const Vector2i &offset) { m_offset = offset; }
 	};
 }

@@ -11,7 +11,7 @@ namespace acid
 		m_skyColour(skyColour),
 		m_blend(1.0f),
 		m_fogColour(Colour()),
-		m_fogLimits(Vector2(-10000.0f, -10000.0f))
+		m_fogLimits(Vector2f(-10000.0f, -10000.0f))
 	{
 	}
 

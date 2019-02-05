@@ -91,7 +91,7 @@ namespace acid
 		/// Gets the mouses screen position.
 		/// </summary>
 		/// <returns> The mouses position. </returns>
-		Vector2 GetPosition() { return Vector2(GetPositionX(), GetPositionY()); }
+		Vector2f GetPosition() { return Vector2f(GetPositionX(), GetPositionY()); }
 
 		/// <summary>
 		/// Sets the mouse position.
@@ -104,13 +104,13 @@ namespace acid
 		/// Sets the mouse position.
 		/// </summary>
 		/// <param name="position"> The position in screen space. </param>
-		void SetPosition(const Vector2 &position);
+		void SetPosition(const Vector2f &position);
 
 		/// <summary>
 		/// Gets the mouses delta.
 		/// </summary>
 		/// <returns> The mouses delta. </returns>
-		Vector2 GetDelta() const { return Vector2(GetDeltaX(), GetDeltaY()); }
+		Vector2f GetDelta() const { return Vector2f(GetDeltaX(), GetDeltaY()); }
 
 		/// <summary>
 		/// Gets the mouses delta x.

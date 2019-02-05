@@ -13,12 +13,12 @@ namespace acid
 	UiInputSlider::UiInputSlider(UiObject *parent, const std::string &title, const float &value, const float &valueMin, const float &valueMax,
 		const int32_t &roundTo, const UiBound &rectangle) :
 		UiObject(parent, rectangle),
-		m_slider(std::make_unique<Gui>(this, UiBound(Vector2(1.0f, 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Scale),
+		m_slider(std::make_unique<Gui>(this, UiBound(Vector2f(1.0f, 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Scale),
 			Texture::Create("Guis/Button_Filled.png"), UiInputButton::PrimaryColour)),
 		m_background(std::make_unique<Gui>(this, UiBound::Maximum, Texture::Create("Guis/Button.png"), UiInputButton::PrimaryColour)),
-		m_textTitle(std::make_unique<Text>(this, UiBound(Vector2(1.0f - (2.5f * UiInputButton::Padding.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Dimensions),
+		m_textTitle(std::make_unique<Text>(this, UiBound(Vector2f(1.0f - (2.5f * UiInputButton::Padding.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Dimensions),
 			UiInputButton::FontSize, title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White)),
-		m_textValue(std::make_unique<Text>(this, UiBound(Vector2(2.5f * UiInputButton::Padding.m_x, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Dimensions),
+		m_textValue(std::make_unique<Text>(this, UiBound(Vector2f(2.5f * UiInputButton::Padding.m_x, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Dimensions),
 			UiInputButton::FontSize, "", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White)),
 		m_soundClick(Sound("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f)),
 		m_title(title),
@@ -94,7 +94,7 @@ namespace acid
 			m_mouseOver = false;
 		}
 
-		m_slider->GetRectangle().SetDimensions(Vector2(1.0f - m_progress, 1.0f));
+		m_slider->GetRectangle().SetDimensions(Vector2f(1.0f - m_progress, 1.0f));
 	}
 
 	void UiInputSlider::SetTitle(const std::string &title)

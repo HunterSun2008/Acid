@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	static const Vector2 SIZE = Vector2(0.22f, 0.0315f);
+	static const Vector2f SIZE = Vector2f(0.22f, 0.0315f);
 
 	UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, const Mark &markType, const bool &checked, const UiBound &rectangle) :
 		UiObject(parent, rectangle),
@@ -23,8 +23,8 @@ namespace acid
 		GetRectangle().SetDimensions(SIZE);
 		m_background->SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
 
-		m_background->GetRectangle().SetDimensions(Vector2(GetRectangle().GetDimensions().m_y, GetRectangle().GetDimensions().m_y));
-		m_text->GetRectangle().SetPosition(Vector2(5.4f * GetRectangle().GetDimensions().m_y, 0.5f));
+		m_background->GetRectangle().SetDimensions(Vector2f(GetRectangle().GetDimensions().m_y, GetRectangle().GetDimensions().m_y));
+		m_text->GetRectangle().SetPosition(Vector2f(5.4f * GetRectangle().GetDimensions().m_y, 0.5f));
 
 		UpdateFill();
 	}

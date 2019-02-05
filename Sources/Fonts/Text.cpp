@@ -52,8 +52,8 @@ namespace acid
 
 		m_uniformObject.Push("colour", m_textColour);
 		m_uniformObject.Push("borderColour", m_borderColour);
-		m_uniformObject.Push("borderSizes", Vector2(GetTotalBorderSize(), GetGlowSize()));
-		m_uniformObject.Push("edgeData", Vector2(CalculateEdgeStart(), CalculateAntialiasSize()));
+		m_uniformObject.Push("borderSizes", Vector2f(GetTotalBorderSize(), GetGlowSize()));
+		m_uniformObject.Push("edgeData", Vector2f(CalculateEdgeStart(), CalculateAntialiasSize()));
 	}
 
 	bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene)
@@ -184,12 +184,12 @@ namespace acid
 		auto vertices = CreateQuad(lines);
 
 		// Calculates the bounds and normalizes the vertices.
-		Vector2 bounding = Vector2();
+		Vector2f bounding = Vector2f();
 		NormalizeQuad(bounding, vertices);
 
 		// Loads the mesh data.
 		m_model = std::make_unique<Model>(vertices);
-		GetRectangle().SetDimensions(Vector2(bounding.m_x, bounding.m_y));
+		GetRectangle().SetDimensions(Vector2f(bounding.m_x, bounding.m_y));
 	}
 
 	std::vector<Text::Line> Text::CreateStructure()
@@ -342,10 +342,10 @@ namespace acid
 
 	void Text::AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<VertexModel> &vertices)
 	{
-		vertices.emplace_back(VertexModel(Vector3(static_cast<float>(vx), static_cast<float>(vy), 0.0f), Vector2(static_cast<float>(tx), static_cast<float>(ty))));
+		vertices.emplace_back(VertexModel(Vector3(static_cast<float>(vx), static_cast<float>(vy), 0.0f), Vector2f(static_cast<float>(tx), static_cast<float>(ty))));
 	}
 
-	void Text::NormalizeQuad(Vector2 &bounding, std::vector<VertexModel> &vertices)
+	void Text::NormalizeQuad(Vector2f &bounding, std::vector<VertexModel> &vertices)
 	{
 		float minX = +std::numeric_limits<float>::infinity();
 		float minY = +std::numeric_limits<float>::infinity();
@@ -382,7 +382,7 @@ namespace acid
 		}
 
 	//	maxY = static_cast<float>(GetFontType()->GetMetadata()->GetMaxSizeY()) * m_numberLines;
-		bounding = Vector2((maxX - minX) / 2.0f, (maxY - minX) / 2.0f);
+		bounding = Vector2f((maxX - minX) / 2.0f, (maxY - minX) / 2.0f);
 
 		for (auto &vertex : vertices)
 		{

@@ -11,8 +11,8 @@ namespace acid
 		m_position(position),
 		m_velocity(velocity),
 		m_change(Vector3()),
-		m_textureOffset1(Vector2()),
-		m_textureOffset2(Vector2()),
+		m_textureOffset1(Vector2f()),
+		m_textureOffset2(Vector2f()),
 		m_lifeLength(lifeLength),
 		m_stageCycles(stageCycles),
 		m_rotation(rotation),
@@ -71,11 +71,11 @@ namespace acid
 		return m_distanceToCamera > other.m_distanceToCamera;
 	}
 
-	Vector2 Particle::CalculateTextureOffset(const int32_t &index) const
+	Vector2f Particle::CalculateTextureOffset(const int32_t &index) const
 	{
 		int32_t column = index % m_particleType->GetNumberOfRows();
 		int32_t row = index / m_particleType->GetNumberOfRows();
-		Vector2 result = Vector2();
+		Vector2f result = Vector2f();
 		result.m_x = static_cast<float>(column) / m_particleType->GetNumberOfRows();
 		result.m_y = static_cast<float>(row) / m_particleType->GetNumberOfRows();
 		return result;

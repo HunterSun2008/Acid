@@ -24,7 +24,7 @@ namespace acid
 	Matrix4::Matrix4(const Matrix2 &source)
 	{
 		memset(m_rows, 0, 4 * sizeof(Vector4));
-		memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2));
+		memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2f));
 		m_rows[2][2] = 1.0f;
 		m_rows[3][3] = 1.0f;
 	}
@@ -130,7 +130,7 @@ namespace acid
 		return result;
 	}
 
-	Matrix4 Matrix4::Translate(const Vector2 &other) const
+	Matrix4 Matrix4::Translate(const Vector2f &other) const
 	{
 		Matrix4 result = Matrix4(*this);
 

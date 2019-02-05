@@ -63,7 +63,7 @@ namespace acid
 
 				Vector3 normal = Vector3(std::cos(phi) * std::sin(theta), std::cos(theta), std::sin(phi) * std::sin(theta));
 				Vector3 position = m_radius * normal;
-				Vector2 uvs = Vector2(1.0f - jDivLat, 1.0f - iDivLong);
+				Vector2f uvs = Vector2f(1.0f - jDivLat, 1.0f - iDivLong);
 				Vector3 tangent = Vector3();
 				vertices.emplace_back(VertexModel(position, uvs, normal, tangent));
 			}

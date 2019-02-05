@@ -5,7 +5,7 @@
 
 namespace acid
 {
-	static const Vector2 SIZE = Vector2(0.22f, 0.22f);
+	static const Vector2f SIZE = Vector2f(0.22f, 0.22f);
 
 	UiColourWheel::UiColourWheel(UiObject *parent, const Colour &colour, const UiBound &rectangle) :
 		UiObject(parent, rectangle),
@@ -28,7 +28,7 @@ namespace acid
 				m_soundClick.Play();
 			}
 
-			Vector2 distance = Mouse::Get()->GetPosition() - (m_background->GetScreenPosition() + (m_background->GetScreenDimensions() / 2.0f));
+			Vector2f distance = Mouse::Get()->GetPosition() - (m_background->GetScreenPosition() + (m_background->GetScreenDimensions() / 2.0f));
 			distance /= 0.5f * m_background->GetScreenDimensions();
 
 		//	m_colour = Colour(); // TODO: Pick colour.
